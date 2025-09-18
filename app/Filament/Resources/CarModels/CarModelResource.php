@@ -24,7 +24,7 @@ class CarModelResource extends Resource
 {
     protected static ?string $model = CarModel::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Minus;
 
     protected static ?string $recordTitleAttribute = 'CarModel';
 

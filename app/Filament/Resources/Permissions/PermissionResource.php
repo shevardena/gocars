@@ -1,30 +1,29 @@
 <?php
 
-namespace App\Filament\Resources\CarMakes;
+namespace App\Filament\Resources\Permissions;
 
-use App\Filament\Resources\CarMakes\Pages\ManageCarMakes;
-use App\Models\CarMake;
+use App\Filament\Resources\Permissions\Pages\ManagePermissions;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Spatie\Permission\Models\Permission;
 
-class CarMakeResource extends Resource
+class PermissionResource extends Resource
 {
-    protected static ?string $model = CarMake::class;
+    protected static ?string $model = Permission::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Minus;
 
-    protected static ?string $recordTitleAttribute = 'CarMake';
+    protected static ?string $recordTitleAttribute = 'Permission';
 
     public static function form(Schema $schema): Schema
     {
@@ -32,35 +31,27 @@ class CarMakeResource extends Resource
             ->components([
                 TextInput::make('name')
                     ->required(),
-                TextInput::make('slug')
-                    ->default(null),
-                SpatieMediaLibraryFileUpload::make('logo'),
+                Select::make('roles')
+                    ->label('Roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('CarMake')
+            ->recordTitleAttribute('Permission')
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
-                    ->width('100px')
                     ->searchable(),
-                SpatieMediaLibraryImageColumn::make('logo')
-                    ->width('100px'),
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('slug')
+                TextColumn::make('guard_name')
                     ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -79,7 +70,7 @@ class CarMakeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageCarMakes::route('/'),
+            'index' => ManagePermissions::route('/'),
         ];
     }
 }
