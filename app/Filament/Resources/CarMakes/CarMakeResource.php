@@ -44,8 +44,11 @@ class CarMakeResource extends Resource
             ->recordTitleAttribute('CarMake')
             ->columns([
                 TextColumn::make('id')
+                    ->label('ID')
+                    ->width('100px')
                     ->searchable(),
-                SpatieMediaLibraryImageColumn::make('logo'),
+                SpatieMediaLibraryImageColumn::make('logo')
+                    ->width('100px'),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('slug')
