@@ -9,10 +9,12 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -32,6 +34,7 @@ class CarMakeResource extends Resource
                     ->required(),
                 TextInput::make('slug')
                     ->default(null),
+                SpatieMediaLibraryFileUpload::make('logo'),
             ]);
     }
 
@@ -40,6 +43,9 @@ class CarMakeResource extends Resource
         return $table
             ->recordTitleAttribute('CarMake')
             ->columns([
+                TextColumn::make('id')
+                    ->searchable(),
+                SpatieMediaLibraryImageColumn::make('logo'),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('slug')

@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use Filament\Schemas\Components\Concerns\HasMeta;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class CarMake extends Model
+class CarMake extends Model implements HasMedia
 {
 
-    use HasSlug;
+    use HasSlug, InteractsWithMedia;
 
     /**
      * Get the options for generating the slug.
