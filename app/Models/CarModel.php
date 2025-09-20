@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -35,5 +36,10 @@ class CarModel extends Model implements HasMedia
     public function make(): BelongsTo
     {
         return $this->belongsTo(CarMake::class, 'car_make_id');
+    }
+
+    public function cars(): HasMany
+    {
+        return $this->hasMany(Car::class, 'car_model_id');
     }
 }

@@ -21,7 +21,11 @@ class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::Minus;
+    protected static string|null|\UnitEnum $navigationGroup = 'Administration';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::LockClosed;
+
+    protected static ?int $navigationSort = 12;
 
     protected static ?string $recordTitleAttribute = 'Permission';
 

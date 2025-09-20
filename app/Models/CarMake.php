@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Filament\Schemas\Components\Concerns\HasMeta;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -30,4 +31,9 @@ class CarMake extends Model implements HasMedia
         'created_at',
         'updated_at'
     ];
+
+    public function models(): HasMany
+    {
+        return $this->hasMany(CarModel::class);
+    }
 }

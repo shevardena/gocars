@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\EditProfile;
+use Filament\Auth\Pages\Login as BaseLogin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -27,7 +29,12 @@ class GconsolePanelProvider extends PanelProvider
             ->default()
             ->id('gconsole')
             ->path('gconsole')
-            ->login()
+            ->login(BaseLogin::class)
+            ->passwordReset()
+            ->emailVerification()
+            ->emailChangeVerification()
+            ->profile()
+            ->authGuard('admin')
             ->colors([
                 'primary' => Color::Amber,
             ])
