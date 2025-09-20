@@ -7,10 +7,37 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
-class Car extends Model
+class Car extends Model implements HasMedia
 {
-    use SoftDeletes;
+    use SoftDeletes, HasSlug, InteractsWithMedia;
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(function (Car $car) {
+                $parts = [];
+
+                $parts[] = $car->id;
+
+                if ($car->model?->make) {
+                    $parts[] = $car->model->make->name;
+                }
+
+                if ($car->model) {
+                    $parts[] = $car->model->name;
+                }
+
+                return implode(' ', $parts);
+            })
+            ->saveSlugsTo('slug');
+    }
+
+
 
     protected $fillable = [
         'id',
@@ -37,35 +64,7 @@ class Car extends Model
         'arrival_date' => 'date',
     ];
 
-    /**
-     * The "booted" method of the model.
-     */
-    protected static function booted(): void
-    {
-        // Generate slug from make and model when model is created
-        static::created(function (Car $car) {
-            if (empty($car->slug)) {
-                $parts = [];
 
-                if (isset($car->model) && isset($car->model->make)) {
-                    $parts[] = $car->model->make->name;
-                }
-
-                if (isset($car->model)) {
-                    $parts[] = $car->model->name;
-                }
-
-                if (empty($parts)) {
-                    $parts[] = $car->arrival_date;
-                }
-
-                $slug = Str::slug(implode(' ', $parts));
-
-                $car->slug = $slug;
-                $car->save();
-            }
-        });
-    }
 
     /**
      * Car model

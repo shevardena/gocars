@@ -9,7 +9,9 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -22,29 +24,32 @@ class CarsTable
                 TextColumn::make('id')
                     ->label('ID')
                     ->searchable(),
+                TextColumn::make('model.make.name')
+                    ->label('Make')
+                    ->sortable(),
+                TextColumn::make('model.name')
+                    ->label('Model')
+                    ->sortable(),
                 TextColumn::make('slug')
                     ->searchable(),
                 TextColumn::make('year')
-                    ->numeric()
                     ->sortable(),
                 TextColumn::make('vin')
                     ->searchable(),
-                TextColumn::make('arrival_date')
-                    ->dateTime()
-                    ->sortable(),
                 TextColumn::make('purchase_date')
                     ->dateTime()
                     ->sortable(),
-                IconColumn::make('is_sold')
-                    ->boolean(),
+                TextColumn::make('arrival_date')
+                    ->dateTime()
+                    ->sortable(),
+                ToggleColumn::make('is_sold'),
                 TextColumn::make('phone')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('email')
                     ->label('Email address')
-                    ->searchable(),
-                TextColumn::make('car_model_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

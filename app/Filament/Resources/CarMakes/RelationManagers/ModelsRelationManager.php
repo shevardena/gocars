@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\CarMakes\RelationManagers;
 
-use App\Filament\Resources\CarModels\CarModelResource;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -11,12 +10,11 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class ModelsRelationManager extends RelationManager
 {
     protected static string $relationship = 'models';
-
-    protected static ?string $relatedResource = CarModelResource::class;
 
     public function table(Table $table): Table
     {
@@ -39,6 +37,8 @@ class ModelsRelationManager extends RelationManager
                     ->required(),
                 TextInput::make('slug')
                     ->default(null),
+                TextInput::make('group'),
+                TextColumn::make('null'),
                 SpatieMediaLibraryFileUpload::make('logo'),
             ]);
     }

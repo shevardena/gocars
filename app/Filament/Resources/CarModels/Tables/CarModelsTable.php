@@ -21,7 +21,8 @@ class CarModelsTable
                     ->searchable(),
                 TextColumn::make('group')
                     ->searchable(),
-                TextColumn::make('car_make_id')
+                TextColumn::make('make.name')
+                    ->label('Make')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')

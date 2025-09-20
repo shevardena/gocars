@@ -4,8 +4,10 @@ namespace App\Filament\Resources\Cars\Schemas;
 
 use App\Models\Car;
 use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 
 class CarInfolist
 {
@@ -13,29 +15,33 @@ class CarInfolist
     {
         return $schema
             ->components([
+                TextEntry::make('model.make.name')
+                    ->label('Make')
+                    ->placeholder(''),
+                TextEntry::make('model.name')
+                    ->label('Model')
+                    ->placeholder(''),
                 TextEntry::make('slug')
-                    ->placeholder('-'),
+                    ->placeholder(''),
+                TextColumn::make('false'),
                 TextEntry::make('year')
-                    ->numeric()
-                    ->placeholder('-'),
+                    ->placeholder(''),
                 TextEntry::make('vin')
-                    ->placeholder('-'),
-                TextEntry::make('arrival_date')
-                    ->dateTime()
-                    ->placeholder('-'),
+                    ->placeholder(''),
                 TextEntry::make('purchase_date')
                     ->dateTime()
-                    ->placeholder('-'),
+                    ->placeholder(''),
+                TextEntry::make('arrival_date')
+                    ->dateTime()
+                    ->placeholder(''),
                 IconEntry::make('is_sold')
                     ->boolean(),
+                TextColumn::make('false'),
                 TextEntry::make('phone')
-                    ->placeholder('-'),
+                    ->placeholder(''),
                 TextEntry::make('email')
                     ->label('Email address')
-                    ->placeholder('-'),
-                TextEntry::make('car_model_id')
-                    ->numeric()
-                    ->placeholder('-'),
+                    ->placeholder(''),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
@@ -45,6 +51,7 @@ class CarInfolist
                 TextEntry::make('deleted_at')
                     ->dateTime()
                     ->visible(fn (Car $record): bool => $record->trashed()),
+                ImageEntry::make('colleagues.images')->stacked()
             ]);
     }
 }
