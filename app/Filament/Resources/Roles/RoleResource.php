@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Roles;
 
 use App\Filament\Resources\Roles\Pages\ManageRoles;
+use Filament\Forms\Components\Select;
 use Spatie\Permission\Models\Role;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
@@ -34,6 +35,12 @@ class RoleResource extends Resource
             ->components([
                 TextInput::make('name')
                     ->required(),
+                Select::make('permissions')
+                    ->label('Permissions')
+                    ->relationship('permissions', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 
