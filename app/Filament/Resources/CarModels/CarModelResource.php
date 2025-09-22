@@ -53,6 +53,11 @@ class CarModelResource extends Resource
         ];
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('car_models.view');
+    }
+
     public static function getPages(): array
     {
         return [

@@ -54,6 +54,11 @@ class CarResource extends Resource
         ];
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('cars.view');
+    }
+
     public static function getPages(): array
     {
         return [

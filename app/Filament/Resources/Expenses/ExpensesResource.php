@@ -54,6 +54,11 @@ class ExpensesResource extends Resource
         ];
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('expenses.view');
+    }
+
     public static function getPages(): array
     {
         return [

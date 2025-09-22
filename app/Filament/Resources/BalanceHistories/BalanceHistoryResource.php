@@ -52,6 +52,11 @@ class BalanceHistoryResource extends Resource
         ];
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('balance_histories.view');
+    }
+
     public static function getPages(): array
     {
         return [

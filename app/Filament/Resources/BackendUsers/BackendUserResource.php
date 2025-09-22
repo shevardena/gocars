@@ -44,6 +44,11 @@ class BackendUserResource extends Resource
         ];
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('backend_users.view');
+    }
+
     public static function getPages(): array
     {
         return [

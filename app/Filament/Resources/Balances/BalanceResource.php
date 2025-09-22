@@ -53,6 +53,12 @@ class BalanceResource extends Resource
         ];
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('balance.view');
+    }
+
+
     public static function getPages(): array
     {
         return [

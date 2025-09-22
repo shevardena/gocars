@@ -71,6 +71,11 @@ class RoleResource extends Resource
             ]);
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('roles.view');
+    }
+
     public static function getPages(): array
     {
         return [

@@ -53,6 +53,11 @@ class CarMakeResource extends Resource
         ];
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('car_makes.view');
+    }
+
     public static function getPages(): array
     {
         return [
