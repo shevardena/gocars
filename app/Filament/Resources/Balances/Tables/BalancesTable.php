@@ -19,12 +19,22 @@ class BalancesTable
                 TextColumn::make('id')
                     ->label('ID')
                     ->searchable(),
-                TextColumn::make('author.name')
-                    ->label('Administrator')
-                    ->sortable(),
-                TextColumn::make('backend_user.name')
+
+                TextColumn::make('author.first_name')
+                    ->label('Author')
+                    ->sortable()
+                    ->searchable()
+                    ->formatStateUsing(fn ($state, $record) =>
+                    trim(($record->author?->first_name ?? '') . ' ' . ($record->author?->last_name ?? ''))
+                    ),
+
+                TextColumn::make('backend_user.first_name')
                     ->label('User')
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable()
+                    ->formatStateUsing(fn ($state, $record) =>
+                    trim(($record->backend_user?->first_name ?? '') . ' ' . ($record->backend_user?->last_name ?? ''))
+                    ),
                 TextColumn::make('amount_usd')
                     ->searchable(),
                 TextColumn::make('usd_rate')

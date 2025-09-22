@@ -13,6 +13,28 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
+            $table->string('amount_gel')->nullable();
+            $table->string('amount_usd')->nullable();
+            $table->unsignedBigInteger('backend_user_id')->nullable();
+            $table->foreign('backend_user_id')
+                ->references('id')
+                ->on('backend_users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->unsignedBigInteger('car_id')->nullable();
+            $table->foreign('car_id')
+                ->references('id')
+                ->on('cars')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->unsignedBigInteger('balance_id')->nullable();
+            $table->foreign('balance_id')
+                ->references('id')
+                ->on('balances')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->string('operation_id')->nullable();
             $table->timestamps();
         });
     }
