@@ -56,9 +56,6 @@ class BalanceHistoryResource extends Resource
     {
         return [
             'index' => ListBalanceHistories::route('/'),
-            'create' => CreateBalanceHistory::route('/create'),
-            'view' => ViewBalanceHistory::route('/{record}'),
-            'edit' => EditBalanceHistory::route('/{record}/edit'),
         ];
     }
 }

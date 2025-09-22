@@ -9,7 +9,7 @@ use App\Filament\Resources\Expenses\Pages\ViewExpenses;
 use App\Filament\Resources\Expenses\Schemas\ExpensesForm;
 use App\Filament\Resources\Expenses\Schemas\ExpensesInfolist;
 use App\Filament\Resources\Expenses\Tables\ExpensesTable;
-use App\Models\Expenses;
+use App\Models\Expense;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ExpensesResource extends Resource
 {
-    protected static ?string $model = Expenses::class;
+    protected static ?string $model = Expense::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Administration';
 
