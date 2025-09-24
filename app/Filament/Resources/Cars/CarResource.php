@@ -69,6 +69,11 @@ class CarResource extends Resource
         ];
     }
 
+    public static function canCreate(): bool
+    {
+        return auth()->user()->can('cars.create');
+    }
+
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()

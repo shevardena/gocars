@@ -16,10 +16,19 @@ class EditCar extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
-            DeleteAction::make(),
-            ForceDeleteAction::make(),
-            RestoreAction::make(),
+            ViewAction::make()->visible(fn () => auth()->user()->can('cars.view')),
+            DeleteAction::make()->visible(fn () => auth()->user()->can('cars.update')),
+            ForceDeleteAction::make()->visible(fn () => auth()->user()->can('cars.update')),
+            RestoreAction::make()->visible(fn () => auth()->user()->can('cars.update')),
+
+        ];
+    }
+
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getSaveFormAction()->visible(fn () => auth()->user()->can('cars.update')),
+            $this->getCancelFormAction()->visible(fn () => auth()->user()->can('cars.update')),
         ];
     }
 }

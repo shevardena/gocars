@@ -7,7 +7,6 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class BalancesTable
@@ -24,23 +23,27 @@ class BalancesTable
                     ->label('Author')
                     ->sortable()
                     ->searchable()
-                    ->formatStateUsing(fn ($state, $record) =>
-                    trim(($record->author?->first_name ?? '') . ' ' . ($record->author?->last_name ?? ''))
+                    ->formatStateUsing(fn($state, $record) => trim(($record->author?->first_name ?? '') . ' ' . ($record->author?->last_name ?? ''))
                     ),
 
                 TextColumn::make('backend_user.first_name')
                     ->label('User')
                     ->sortable()
                     ->searchable()
-                    ->formatStateUsing(fn ($state, $record) =>
-                    trim(($record->backend_user?->first_name ?? '') . ' ' . ($record->backend_user?->last_name ?? ''))
+                    ->formatStateUsing(fn($state, $record) => trim(($record->backend_user?->first_name ?? '') . ' ' . ($record->backend_user?->last_name ?? ''))
                     ),
                 TextColumn::make('amount_usd')
+                    ->label('Amount USD')
                     ->searchable(),
                 TextColumn::make('usd_rate')
                     ->sortable(),
+                TextColumn::make('amount_gel')
+                    ->label('Amount GEL')
+                    ->searchable(),
                 TextColumn::make('amount')
-                    ->sortable(),
+                    ->label('Current amount')
+                    ->sortable()
+                ->formatStateUsing(fn ($state) => number_format($state, 0) . ' GEL'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
