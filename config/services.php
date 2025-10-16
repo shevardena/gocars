@@ -34,5 +34,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'tbc_exchange' => [
+        'url' => env('TBC_API_URL', 'https://api.tbcbank.ge/v1/exchange-rates/commercial'),
+        'key' => env('TBC_API_KEY'),
+    ],
 
 ];

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('amount_gel')->nullable();
             $table->string('amount_usd')->nullable();
+            $table->float('usd_rate')->nullable();
             $table->unsignedBigInteger('backend_user_id')->nullable();
             $table->foreign('backend_user_id')
                 ->references('id')

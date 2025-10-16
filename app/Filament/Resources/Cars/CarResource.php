@@ -6,6 +6,7 @@ use App\Filament\Resources\Cars\Pages\CreateCar;
 use App\Filament\Resources\Cars\Pages\EditCar;
 use App\Filament\Resources\Cars\Pages\ListCars;
 use App\Filament\Resources\Cars\Pages\ViewCar;
+use App\Filament\Resources\Cars\RelationManagers\ExpensesRelationManager;
 use App\Filament\Resources\Cars\Schemas\CarForm;
 use App\Filament\Resources\Cars\Schemas\CarInfolist;
 use App\Filament\Resources\Cars\Tables\CarsTable;
@@ -50,7 +51,7 @@ class CarResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ExpensesRelationManager::class
         ];
     }
 

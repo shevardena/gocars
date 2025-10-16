@@ -2,48 +2,59 @@
 
 namespace App\Filament\Resources\Expenses\Tables;
 
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class ExpensesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function ($query) {
+                $user = Auth::user();
+
+                if (!$user->super_admin) {
+                    $query->where('backend_user_id', $user->id);
+                }
+                $query->orderByDesc('created_at');
+            })
             ->columns([
-                TextColumn::make('car.model.make.name')
-                    ->label('Make')
-                    ->sortable()
-                    ->searchable(),
+                TextColumn::make('car')
+                    ->label('Car')
+                    ->html()
+                    ->formatStateUsing(function ($state, $record) {
+                        $car = $record->car;
 
-                TextColumn::make('car.model.name')
-                    ->label('Model')
-                    ->sortable()
-                    ->searchable(),
+                        if (!$car) {
+                            return '-';
+                        }
 
-                TextColumn::make('car.year')
-                    ->label('Year')
-                    ->sortable()
-                    ->searchable(),
+                        $make = e($car->model->make->name ?? '-');
+                        $model = e($car->model->name ?? '-');
+                        $year = e($car->year ?? '-');
+                        $vin = e($car->vin ?? '-');
 
-                TextColumn::make('car.vin')
-                    ->label('VIN')
-                    ->sortable()
-                    ->searchable(),
-
-                TextColumn::make('author.first_name')
+                        return <<<HTML
+                            <div style="line-height:1.4">
+                                {$make} {$model} {$year}<br>
+                                <small>VIN:</small> <strong>{$vin}</strong>
+                            </div>
+                        HTML;
+                    })
+                    ->searchable(['car.model.make.name', 'car.model.name', 'car.vin']),
+                TextColumn::make('backend_user.first_name')
                     ->label('Author')
                     ->sortable()
                     ->searchable()
-                    ->formatStateUsing(fn ($state, $record) =>
-                    trim(($record->author?->first_name ?? '') . ' ' . ($record->author?->last_name ?? ''))
+                    ->formatStateUsing(fn($state, $record) => trim(($record->backend_user?->first_name ?? '') . ' ' . ($record->backend_user?->last_name ?? ''))
                     ),
 
                 TextColumn::make('title')
@@ -53,12 +64,12 @@ class ExpensesTable
                 TextColumn::make('amount_gel')
                     ->label('Amount (GEL)')
                     ->sortable()
-                    ->formatStateUsing(fn ($state) => round(floatval($state), 2) . ' GEL'),
+                    ->formatStateUsing(fn($state) => round(floatval($state), 2) . ' GEL'),
 
                 TextColumn::make('amount_usd')
                     ->label('Amount (USD)')
                     ->sortable()
-                    ->formatStateUsing(fn ($state) => round(floatval($state), 2) . ' USD'),
+                    ->formatStateUsing(fn($state) => round(floatval($state), 2) . ' USD'),
             ])
             ->filters([
                 // Example: filter by operation type if you have it

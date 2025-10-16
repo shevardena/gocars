@@ -50,7 +50,7 @@ class BalanceHistoriesTable
                     ->label('Amount in USD')
                     ->sortable()
                     ->searchable()
-                    ->formatStateUsing(fn ($state) => $state . ' USD'),
+                    ->formatStateUsing(fn ($state) => round(floatval($state), 2) . ' USD'),
 
                 TextColumn::make('usd_rate')
                     ->label('USD Rate')
@@ -62,7 +62,7 @@ class BalanceHistoriesTable
                     ->label('Amount in GEL')
                     ->sortable()
                     ->searchable()
-                    ->formatStateUsing(fn ($state) => ($state ?: 0) . ' GEL'),
+                    ->formatStateUsing(fn ($state) => round(floatval($state), 2) . ' GEL'),
             ])
             ->filters([
                 SelectFilter::make('operation_type')

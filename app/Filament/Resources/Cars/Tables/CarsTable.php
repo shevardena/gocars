@@ -42,7 +42,8 @@ class CarsTable
                 TextColumn::make('arrival_date')
                     ->dateTime()
                     ->sortable(),
-                ToggleColumn::make('is_sold'),
+                ToggleColumn::make('is_sold')
+                ->disabled(!auth()->user()->can('cars.update')),
                 TextColumn::make('phone')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
