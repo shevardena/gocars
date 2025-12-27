@@ -25,12 +25,16 @@ class BalanceForm
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->first_name} {$record->last_name}")
                     ->searchable(['first_name', 'last_name']),
                 TextColumn::make('false'),
-                TextInput::make('amount_usd')
-                    ->label('Amount USD')
+
+                TextInput::make('amount_gel')
+                    ->label('Amount GEL')
+                    ->numeric()
                     ->required(),
+
                 TextInput::make('usd_rate')
-                    ->label('USD Rate')
-                    ->required(),
+                    ->label('USD Rate (optional)')
+                    ->numeric()
+                    ->nullable(),
             ]);
     }
 }

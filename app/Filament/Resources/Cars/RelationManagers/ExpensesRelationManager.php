@@ -90,7 +90,7 @@ class ExpensesRelationManager extends RelationManager
             ])
             ->headerActions([
                 CreateAction::make()
-                    ->label('Add Expense')
+                    ->label('ხარჯის დამატება')
                     ->visible(fn() => Auth::user()->can('expenses.create'))
                     ->action(function (array $data, RelationManager $livewire) {
                         $user = Auth::user();
@@ -120,9 +120,8 @@ class ExpensesRelationManager extends RelationManager
                     }),
             ])
             ->recordActions([
-                ViewAction::make(),
-
                 EditAction::make()
+                    ->label('რედაქტირება')
                     ->visible(function ($record) {
                         $user = Auth::user();
                         if ($user->super_admin) {
@@ -160,6 +159,7 @@ class ExpensesRelationManager extends RelationManager
                     }),
 
                 DeleteAction::make()
+                    ->label('წაშლა')
                     ->visible(function ($record) {
                         $user = Auth::user();
                         if ($user->super_admin) {

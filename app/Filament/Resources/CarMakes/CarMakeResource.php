@@ -63,7 +63,6 @@ class CarMakeResource extends Resource
         return [
             'index' => ListCarMakes::route('/'),
             'create' => CreateCarMake::route('/create'),
-            'view' => ViewCarMake::route('/{record}'),
             'edit' => EditCarMake::route('/{record}/edit'),
         ];
     }

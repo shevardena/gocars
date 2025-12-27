@@ -10,12 +10,4 @@ use Filament\Resources\Pages\EditRecord;
 class EditCarMake extends EditRecord
 {
     protected static string $resource = CarMakeResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            ViewAction::make(),
-            DeleteAction::make(),
-        ];
-    }
 }

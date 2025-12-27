@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Expenses\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
@@ -81,8 +82,7 @@ class ExpensesTable
                     ]),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                EditAction::make()->label('რედაქტირება'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

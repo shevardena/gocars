@@ -64,8 +64,6 @@ class BalanceResource extends Resource
         return [
             'index' => ListBalances::route('/'),
             'create' => CreateBalance::route('/create'),
-            'view' => ViewBalance::route('/{record}'),
-            'edit' => EditBalance::route('/{record}/edit'),
         ];
     }
 }

@@ -12,6 +12,8 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Assets\Css;
+use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
@@ -46,6 +48,17 @@ class GconsolePanelProvider extends PanelProvider
             ])
             ->colors([
                 'primary' => Color::Amber,
+            ])
+            ->assets([
+                Css::make('filament-v4-fonts', 'css/filament-v4-fonts.css'),
+                Css::make(
+                    'swiper-css',
+                    'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'
+                ),
+                Js::make(
+                    'swiper-js',
+                    'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js'
+                ),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

@@ -30,26 +30,33 @@ class BalanceService
      * Store balance
      * @param array $data
      * @return void
-     * @throws \Exception
+     * @throws \Exception|\Throwable
      */
     public function store(array $data): void
     {
         DB::beginTransaction();
         try {
 
-            $amount_usd = $data['amount_usd'];
-            $usd_rate = $data['usd_rate'];
+            $amountGel = $data['amount_gel'];
 
-            $amount = $this->balanceCalculator->calculateAmountGel($amount_usd, $usd_rate);
-            $data['amount_gel'] = $data['amount'] = $amount;
+            $usdRate = $data['usd_rate'] ?? $this->balanceCalculator->getCachedUsdRate();
+
+            $amount = $this->balanceCalculator->calculateAmountGel($amountGel, $usdRate);
+
+            $data['amount'] = $amount;
+            $data['amount_gel'] = $amount;
+            $data['usd_rate'] = $usdRate;
             $data['author_id'] = auth()->id();
 
             $balance = $this->balanceRepository->create($data);
+
             $this->balanceHistoryService->create($balance, 'deposit');
+
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
+
         DB::commit();
     }
 

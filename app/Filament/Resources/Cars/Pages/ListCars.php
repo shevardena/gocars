@@ -14,7 +14,7 @@ class ListCars extends ListRecords
     {
         return [
             CreateAction::make()
-                ->visible(fn () => auth()->user()->can('cars.create')),
+                ->visible(fn () => auth()->user()->can('cars.create'))->label('დამატება'),
         ];
     }
 }

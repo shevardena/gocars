@@ -64,7 +64,6 @@ class ExpensesResource extends Resource
         return [
             'index' => ListExpenses::route('/'),
             'create' => CreateExpenses::route('/create'),
-            'view' => ViewExpenses::route('/{record}'),
             'edit' => EditExpenses::route('/{record}/edit'),
         ];
     }

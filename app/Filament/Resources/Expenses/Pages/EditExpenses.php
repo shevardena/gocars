@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Expenses\Pages;
 
 use App\Filament\Resources\Expenses\ExpensesResource;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
@@ -16,10 +17,23 @@ class EditExpenses extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
-            DeleteAction::make(),
-            ForceDeleteAction::make(),
-            RestoreAction::make(),
+            DeleteAction::make()->label('წაშლა'),
+        ];
+    }
+
+    protected function getFormActions(): array
+    {
+        return [
+            Action::make('save')
+                ->label('შენახვა')
+                ->submit('save') // 🔥 calls save() internally
+                ->keyBindings(['mod+s'])
+                ->color('primary'),
+
+            Action::make('cancel')
+                ->label('გაუქმება')
+                ->url($this->getResource()::getUrl())
+                ->color('gray'),
         ];
     }
 }

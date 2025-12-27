@@ -14,6 +14,7 @@ class BalancesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
@@ -32,13 +33,13 @@ class BalancesTable
                     ->searchable()
                     ->formatStateUsing(fn($state, $record) => trim(($record->backend_user?->first_name ?? '') . ' ' . ($record->backend_user?->last_name ?? ''))
                     ),
-                TextColumn::make('amount_usd')
-                    ->label('Amount USD')
+                TextColumn::make('amount_gel')
+                    ->label('Amount GEL')
                     ->searchable(),
                 TextColumn::make('usd_rate')
                     ->sortable(),
-                TextColumn::make('amount_gel')
-                    ->label('Amount GEL')
+                TextColumn::make('amount_usd')
+                    ->label('Amount USD')
                     ->searchable(),
                 TextColumn::make('amount')
                     ->label('Current amount')
@@ -59,10 +60,6 @@ class BalancesTable
             ])
             ->filters([
                 //
-            ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

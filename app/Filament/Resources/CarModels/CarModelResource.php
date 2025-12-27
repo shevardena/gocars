@@ -63,7 +63,6 @@ class CarModelResource extends Resource
         return [
             'index' => ListCarModels::route('/'),
             'create' => CreateCarModel::route('/create'),
-            'view' => ViewCarModel::route('/{record}'),
             'edit' => EditCarModel::route('/{record}/edit'),
         ];
     }

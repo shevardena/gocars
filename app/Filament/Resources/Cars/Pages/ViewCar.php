@@ -13,7 +13,7 @@ class ViewCar extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make()->visible(fn () => auth()->user()->can('cars.update')),
+            EditAction::make()->visible(fn () => auth()->user()->can('cars.update'))->label('რედაქტირება'),
         ];
     }
 }

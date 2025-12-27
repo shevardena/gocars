@@ -47,6 +47,7 @@ class Car extends Model implements HasMedia
         'arrival_date',
         'purchase_date',
         'is_sold',
+        'sold_price_usd',
         'phone',
         'email',
         'car_model_id',
@@ -82,5 +83,22 @@ class Car extends Model implements HasMedia
     public function expenses(): hasMany
     {
         return $this->hasMany(Expense::class, 'car_id');
+    }
+
+    public function getTotalExpensesUsdAttribute(): float
+    {
+        return (float) $this->expenses()->sum('amount_usd');
+    }
+
+    public function getProfitUsdAttribute(): ?float
+    {
+        if (!$this->is_sold || !$this->sold_price_usd) {
+            return null;
+        }
+
+        return round(
+            $this->sold_price_usd - $this->total_expenses_usd,
+            2
+        );
     }
 }
