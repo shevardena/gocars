@@ -48,8 +48,18 @@ class ExchangeRateService
      */
     public static function getUsdRate(): float
     {
-        return Cache::remember('usd_rate', now()->addMinutes(10), function () {
-            return self::fetchAndCacheUsdRate() ?? 1.0;
-        });
+        $rate = Cache::get('usd_rate');
+
+        if ($rate) {
+            return (float) $rate;
+        }
+
+        $rate = self::fetchAndCacheUsdRate();
+
+        if (! $rate) {
+            throw new \RuntimeException('USD rate unavailable');
+        }
+
+        return (float) $rate;
     }
 }

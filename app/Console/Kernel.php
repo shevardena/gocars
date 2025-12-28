@@ -12,7 +12,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('exchange:usd')->everyFiveMinutes();
+        $schedule->command('exchange:usd')
+            ->everyFiveMinutes()
+            ->withoutOverlapping()
+            ->onOneServer()
+            ->runInBackground();
+
+        $schedule->command('notifications:send')
+            ->dailyAt('09:00')
+            ->withoutOverlapping()
+            ->onOneServer();
     }
 
 

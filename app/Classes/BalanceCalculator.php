@@ -7,7 +7,7 @@ class BalanceCalculator
     public function getCachedUsdRate(): float
     {
         return cache()->remember('usd_rate', 3600, function () {
-            return config('rates.usd_rate'); // or fetch from db/api
+            return config('rates.usd_rate');
         });
     }
 

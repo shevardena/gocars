@@ -39,7 +39,8 @@ class BalanceService
 
             $amountGel = $data['amount_gel'];
 
-            $usdRate = $data['usd_rate'] ?? $this->balanceCalculator->getCachedUsdRate();
+            $usdRate = $data['usd_rate']
+                ?? ExchangeRateService::getUsdRate();
 
             $amount = $this->balanceCalculator->calculateAmountGel($amountGel, $usdRate);
 
