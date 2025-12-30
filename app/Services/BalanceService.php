@@ -37,15 +37,18 @@ class BalanceService
         DB::beginTransaction();
         try {
 
-            $amountGel = $data['amount_gel'];
+            $amountGel = (float) $data['amount_gel'];
 
+            // ✅ Guaranteed rate (throws if unavailable)
             $usdRate = $data['usd_rate']
                 ?? ExchangeRateService::getUsdRate();
 
-            $amount = $this->balanceCalculator->calculateAmountGel($amountGel, $usdRate);
+            $amountGelNormalized = $this->balanceCalculator->normalizeGel($amountGel);
+            $amountUsd = $this->balanceCalculator->gelToUsd($amountGelNormalized, $usdRate);
 
-            $data['amount'] = $amount;
-            $data['amount_gel'] = $amount;
+            $data['amount'] = $amountGelNormalized;
+            $data['amount_gel'] = $amountGelNormalized;
+            $data['amount_usd'] = $amountUsd;
             $data['usd_rate'] = $usdRate;
             $data['author_id'] = auth()->id();
 

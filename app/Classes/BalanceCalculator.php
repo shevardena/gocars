@@ -15,4 +15,24 @@ class BalanceCalculator
     {
         return $gelAmount;
     }
+
+    /**
+     * Convert GEL to USD using rate
+     */
+    public function gelToUsd(float $gelAmount, float $usdRate): float
+    {
+        if ($usdRate <= 0) {
+            throw new \InvalidArgumentException('Invalid USD rate');
+        }
+
+        return round($gelAmount / $usdRate, 2);
+    }
+
+    /**
+     * Normalize GEL amount
+     */
+    public function normalizeGel(float $gelAmount): float
+    {
+        return round($gelAmount, 2);
+    }
 }
